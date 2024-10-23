@@ -5,7 +5,7 @@ export default function Home() {
     <div className="root">
       <h1>Root Page</h1>
 
-      <Input type="text" className="input is-primary" />
+      <Input />
     </div>
   );
 }

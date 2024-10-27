@@ -1,0 +1,38 @@
+# docker-compose.yml
+version: "3"
+services:
+  nginx:
+    build: .
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+    networks:
+      - proxy-network
+    depends_on:
+      - frontend
+      - backend
+
+  frontend:
+    image: node:14 # Замените на нужный вам образ для фронтенда
+    container_name: frontend
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    command: sh -c "npm install && npm run dev" # Настройте команду для запуска вашего фронтенда
+    networks:
+      - proxy-network
+
+  # TODO: uncommet when backend ready
+  # backend:
+  #   image: node:14 # Замените на нужный вам образ для бэкенда
+  #   container_name: backend
+  #   working_dir: /app
+  #   volumes:
+  #     - ./backend:/app
+  #   command: sh -c "npm install && npm run start" # Настройте команду для запуска вашего бэкенда
+  #   networks:
+  #     - proxy-network
+
+networks:
+  proxy-network:
+    driver: bridge

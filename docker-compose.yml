@@ -1,38 +1,40 @@
-# docker-compose.yml
-version: "3"
+version: "3.8"
+
 services:
-  nginx:
-    build: .
-    container_name: nginx-proxy
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
-      - "80:80"
-    networks:
-      - proxy-network
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
     depends_on:
-      - frontend
       - backend
 
-  frontend:
-    image: node:14 # Замените на нужный вам образ для фронтенда
-    container_name: frontend
-    working_dir: /app
-    volumes:
-      - ./frontend:/app
-    command: sh -c "npm install && npm run dev" # Настройте команду для запуска вашего фронтенда
-    networks:
-      - proxy-network
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001 # Добавьте эту строку
+    # depends_on:
+    #   - db
 
-  # TODO: uncommet when backend ready
-  # backend:
-  #   image: node:14 # Замените на нужный вам образ для бэкенда
-  #   container_name: backend
-  #   working_dir: /app
+  # db:
+  #   image: mysql:8
+  #   ports:
+  #     - "3306:3306"
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: example
+  #     MYSQL_DATABASE: next_intro_db
+  #     MYSQL_USER: user
+  #     MYSQL_PASSWORD: password
   #   volumes:
-  #     - ./backend:/app
-  #   command: sh -c "npm install && npm run start" # Настройте команду для запуска вашего бэкенда
-  #   networks:
-  #     - proxy-network
+  #     - db_data:/var/lib/mysql
 
-networks:
-  proxy-network:
-    driver: bridge
+volumes:
+  db_data:

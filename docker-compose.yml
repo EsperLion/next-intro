@@ -20,21 +20,26 @@ services:
       - "3001:3001"
     environment:
       - NODE_ENV=production
-      - PORT=3001 # Добавьте эту строку
-    # depends_on:
-    #   - db
+      - PORT=3001
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+      - DATABASE_USER=user
+      - DATABASE_PASSWORD=password
+      - DATABASE_NAME=next_intro_db
+    depends_on:
+      - db_postgress
 
-  # db:
-  #   image: mysql:8
-  #   ports:
-  #     - "3306:3306"
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: example
-  #     MYSQL_DATABASE: next_intro_db
-  #     MYSQL_USER: user
-  #     MYSQL_PASSWORD: password
-  #   volumes:
-  #     - db_data:/var/lib/mysql
+  db_postgress:
+    image: postgres:15
+    container_name: next-intro-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: next_intro_db
+    volumes:
+      - db_data:/var/lib/postgresql/data
 
 volumes:
   db_data:

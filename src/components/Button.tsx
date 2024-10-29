@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+type ButtonProps = React.ComponentProps<'button'> & {
   color?:
     | 'primary'
     | 'link'
@@ -20,6 +20,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   isStatic?: boolean;
   isLoading?: boolean;
   state?: 'hovered' | 'focused' | 'active';
+  isDelete?: boolean;
 };
 
 export function Button({
@@ -36,6 +37,7 @@ export function Button({
   state,
   className,
   children,
+  isDelete,
   ...buttonProps
 }: ButtonProps) {
   const classes = clsx(
@@ -51,6 +53,7 @@ export function Button({
     isStatic && 'is-static',
     isLoading && 'is-loading',
     state && `is-${state}`,
+    isDelete && 'delete',
     className,
   );
 

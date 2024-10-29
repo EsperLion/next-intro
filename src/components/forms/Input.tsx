@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> & {
+type InputProps = Omit<React.ComponentProps<'input'>, 'size'> & {
   color?:
     | 'default'
     | 'primary'

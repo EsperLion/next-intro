@@ -13,11 +13,11 @@ type UserDTO = {
   ip_address: string;
 };
 
-type UserQueryDto = UserDTO;
-type UserCommandDto = Partial<UserDTO>;
+export type UserQueryDto = UserDTO;
+export type UserCommandDto = Partial<UserDTO>;
 
 export function getContact(id: string) {
-  return GET<{ data: UserQueryDto }>(`contacts/${id}`).then(
+  return GET<{ data: UserQueryDto }>(`/contacts/${id}`).then(
     (data) => data.data,
   );
 }
@@ -32,13 +32,13 @@ export function createContact(data: UserCommandDto) {
 
 export function updateContact(data: UserCommandDto) {
   return PUT<{ data: UserCommandDto }>(
-    `contacts/${data.documentId}`,
+    `/contacts/${data.documentId}`,
     data,
   ).then((data) => data);
 }
 
-export function deleteUser(id: string) {
-  return DELETE<{ data: UserQueryDto }>(`contacts/${id}`).then(
+export function deleteContact(id: string) {
+  return DELETE<{ data: UserQueryDto }>(`/contacts/${id}`).then(
     (data) => data.data,
   );
 }

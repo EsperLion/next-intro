@@ -2,6 +2,7 @@ import { revalidatePath } from 'next/cache';
 
 import { updateContact, getContact, UserCommandDto } from '@/api';
 import { ContactForm } from '@/components/ui/contact-form';
+import { redirect } from 'next/navigation';
 
 type ContactProps = {
   params: Promise<{ id: string }>;
@@ -24,7 +25,7 @@ export default async function EditContact({ params }: ContactProps) {
     'use server';
 
     const data = {
-      documentId: contact.documentId,
+      ...contact,
       first_name: form.get('firstName'),
       last_name: form.get('lastName'),
       email: form.get('email'),
@@ -37,6 +38,7 @@ export default async function EditContact({ params }: ContactProps) {
     console.log({ result });
 
     revalidatePath('/contacts');
+    redirect('/contacts');
   }
   return <ContactForm action={submitForm} defaultValues={defaultFormValues} />;
 }

@@ -1,6 +1,7 @@
 import { createContact, UserCommandDto } from '@/api';
 import { ContactForm } from '@/components/ui/contact-form';
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 export default function CreateContact() {
   async function submitForm(form: FormData) {
@@ -19,6 +20,7 @@ export default function CreateContact() {
     console.log({ result });
 
     revalidatePath('/contacts');
+    redirect('/contacts');
   }
   return <ContactForm action={submitForm} />;
 }

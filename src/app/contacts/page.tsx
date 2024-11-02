@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: 'Post page',
 };
 
-export default async function Users() {
+export default async function Contact() {
   const contacts = await getContacts();
 
   async function deleteAction(contactId: string) {
@@ -22,9 +22,9 @@ export default async function Users() {
   }
 
   return (
-    <div className="w-dvw h-dvh flex items-center justify-center ">
-      <div className="max-w-5xl flex items-start justify-stretch overflow-hidden h-dvh">
-        <div className="h-full overflow-auto">
+    <div className="w-dvw flex items-center justify-center ">
+      <div className="max-w-5xl flex items-start justify-stretch">
+        <div className="h-full">
           <div className="px-1">
             <h1>Contacts Page</h1>
             <Link
